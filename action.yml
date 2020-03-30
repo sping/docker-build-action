@@ -1,0 +1,21 @@
+name: Docker build
+description: Build Docker image and cache it using actions/cache
+
+inputs:
+  stage-name:
+    description: Name of the stage to build & cache
+    required: true
+  cache-path:
+    description: Directory to load & save image from
+    required: true
+    default: "/tmp/docker"
+  save:
+    description: "Should the image be saved? If there's a cache hit, this should probably be false."
+    required: true
+    default: "true"
+
+runs:
+  using: node12
+  main: dist/build/index.js
+  post: dist/save/index.js
+  post-if: success()
