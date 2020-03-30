@@ -2,6 +2,10 @@ name: Docker build
 description: Build Docker image and cache it using actions/cache
 
 inputs:
+  image-name:
+    description: Image name to tag the image with. Defaults to `${repo-name}/${stage-name}`
+    required: false
+    default: ""
   stage-name:
     description: Name of the stage to build & cache
     required: true

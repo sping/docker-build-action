@@ -9276,7 +9276,11 @@ const path = __webpack_require__(622);
 const stageName = core.getInput('stage-name');
 const cacheDir = core.getInput('cache-path');
 const cacheFile = path.join(cacheDir, stageName);
-const tag = `${github.context.repo.repo}:${stageName}`;
+
+const imageName = core.getInput('image-name');
+const tag = imageName
+  ? imageName
+  : `${github.context.repo.repo}/${stageName}`;
 
 async function runAndCatch(fn) {
   try {
