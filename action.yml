@@ -5,18 +5,22 @@ inputs:
   image-name:
     description: Image name to tag the image with. Defaults to `${repo-name}/${stage-name}`
     required: false
-    default: ""
+    default: ''
   stage-name:
     description: Name of the stage to build & cache
     required: true
   cache-path:
     description: Directory to load & save image from
     required: true
-    default: "/tmp/docker"
+    default: '/tmp/docker'
   save:
     description: "Should the image be saved? If there's a cache hit, this should probably be false."
     required: true
-    default: "true"
+    default: 'true'
+  build-args:
+    description: 'Additional build arguments to be passed to your Dockerfile (JSON array)'
+    required: false
+    default: '[]'
 
 runs:
   using: node12

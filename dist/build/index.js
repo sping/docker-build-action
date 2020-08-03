@@ -1395,11 +1395,14 @@ const {
   cacheDir,
   cacheFile,
   tag,
-  runAndCatch
+  runAndCatch,
+  buildArgs,
 } = __webpack_require__(619);
 
 async function run() {
   await loadCached();
+
+  const extraArgs = buildArgs.flatMap((arg) => ['--build-arg', arg]);
 
   console.log(`Building image for stage ${stageName}`);
   await exec.exec(
@@ -1408,13 +1411,14 @@ async function run() {
       'build',
       '--build-arg',
       'BUILDKIT_INLINE_CACHE=1',
+      ...extraArgs,
       `--cache-from`,
       tag,
       `--target`,
       stageName,
       `-t`,
       tag,
-      '.'
+      '.',
     ],
     { env: { DOCKER_BUILDKIT: '1' } }
   );
@@ -1424,7 +1428,7 @@ async function run() {
 async function loadCached() {
   await exec.exec('mkdir', ['-p', cacheDir]);
   const cacheCheckReturn = await exec.exec('test', ['-f', cacheFile], {
-    ignoreReturnCode: true
+    ignoreReturnCode: true,
   });
 
   if (cacheCheckReturn !== 0) {
@@ -9266,6 +9270,7 @@ module.exports = require("events");
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stageName", function() { return stageName; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cacheDir", function() { return cacheDir; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "buildArgs", function() { return buildArgs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cacheFile", function() { return cacheFile; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tag", function() { return tag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "runAndCatch", function() { return runAndCatch; });
@@ -9275,6 +9280,7 @@ const path = __webpack_require__(622);
 
 const stageName = core.getInput('stage-name');
 const cacheDir = core.getInput('cache-path');
+const buildArgs = JSON.parse(core.getInput('build-args'));
 const cacheFile = path.join(cacheDir, stageName);
 
 const imageName = core.getInput('image-name');

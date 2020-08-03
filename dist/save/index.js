@@ -9211,6 +9211,7 @@ module.exports = require("events");
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stageName", function() { return stageName; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cacheDir", function() { return cacheDir; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "buildArgs", function() { return buildArgs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cacheFile", function() { return cacheFile; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tag", function() { return tag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "runAndCatch", function() { return runAndCatch; });
@@ -9220,6 +9221,7 @@ const path = __webpack_require__(622);
 
 const stageName = core.getInput('stage-name');
 const cacheDir = core.getInput('cache-path');
+const buildArgs = JSON.parse(core.getInput('build-args'));
 const cacheFile = path.join(cacheDir, stageName);
 
 const imageName = core.getInput('image-name');
