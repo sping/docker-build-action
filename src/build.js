@@ -5,11 +5,14 @@ const {
   cacheDir,
   cacheFile,
   tag,
-  runAndCatch
+  runAndCatch,
+  buildArgs,
 } = require('./shared');
 
 async function run() {
   await loadCached();
+
+  const extraArgs = buildArgs.flatMap((arg) => ['--build-arg', arg]);
 
   console.log(`Building image for stage ${stageName}`);
   await exec.exec(
@@ -18,13 +21,14 @@ async function run() {
       'build',
       '--build-arg',
       'BUILDKIT_INLINE_CACHE=1',
+      ...extraArgs,
       `--cache-from`,
       tag,
       `--target`,
       stageName,
       `-t`,
       tag,
-      '.'
+      '.',
     ],
     { env: { DOCKER_BUILDKIT: '1' } }
   );
@@ -34,7 +38,7 @@ async function run() {
 async function loadCached() {
   await exec.exec('mkdir', ['-p', cacheDir]);
   const cacheCheckReturn = await exec.exec('test', ['-f', cacheFile], {
-    ignoreReturnCode: true
+    ignoreReturnCode: true,
   });
 
   if (cacheCheckReturn !== 0) {
