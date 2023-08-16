@@ -6,6 +6,9 @@
   "scripts": {
     "build": "ncc build -o dist/build src/build.js && ncc build -o dist/save src/save.js"
   },
+  "engines": {
+    "node": ">=16.0.0 <17.0.0"
+  },
   "author": "Alexander Weiss",
   "license": "MIT",
   "dependencies": {
