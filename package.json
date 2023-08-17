@@ -1,17 +1,20 @@
 {
   "name": "docker-build-action",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "Build Docker image and cache it using actions/cache",
   "main": "dist/main.js",
   "scripts": {
     "build": "ncc build -o dist/build src/build.js && ncc build -o dist/save src/save.js"
   },
+  "engines": {
+    "node": ">=16.0.0 <17.0.0"
+  },
   "author": "Alexander Weiss",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.3",
-    "@actions/exec": "^1.0.3",
-    "@actions/github": "^2.1.1"
+    "@actions/core": "^1.10.0",
+    "@actions/exec": "^1.1.1",
+    "@actions/github": "^5.1.1"
   },
   "devDependencies": {
     "@zeit/ncc": "^0.22.0"
